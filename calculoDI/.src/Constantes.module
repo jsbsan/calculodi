@@ -1,0 +1,44 @@
+' Gambas module file
+
+'Zona de constantes
+Public squares As Integer = 8 'cuadros del tablero
+Public initialrows As Integer = 3
+
+Public piece As Integer = 1
+Public king As Integer = 2
+Public blank As Integer = 0
+
+Public black As Integer = -1 'jugador negro
+Public white As Integer = 1 'jugador blanco
+
+'Public ColorDarkSquare As Integer = Color.red 'black
+'Public ColorLightSquare As Integer = Color.gray 'red
+
+Public colorSelect As Integer = 1 ' blue
+Public ColorSelectFinal As Integer = 9 'cyan
+
+Public ColorBlack As Integer = 8 'gray
+Public colorWhite As Integer = 15 'white
+
+Public finjuego As Boolean
+'Public jugando As Boolean
+
+Public PlayerStrategy As New Collection 'estrategia de los jugadores black y white,
+
+Public dibujoPeon As String = "peon"
+Public dibujoReina As String = "reina"
+
+Public jugadoractual As Integer
+
+Public Sub iniciar()
+
+  ' FMain.finjuego = False
+  'Constantes.ColorDarkSquare = Color.gray
+  '  Constantes.ColorLightSquare = Color.white
+  'defino estrategia de los jugadores como "Humanos"
+  PlayerStrategy.Clear()
+  PlayerStrategy.Add(0, Str$(black))
+  PlayerStrategy.Add(0, Str$(white))
+  '  FMain.casilla = 1 'que siempre empiece por casilla "origen"
+
+End

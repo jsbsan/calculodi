@@ -1,5 +1,108 @@
 ' Gambas module file
 
-Public Sub Main()
+Public contenido As String
+
+Public turno As Integer 'controla el turno del jugador que tiene que jugar ahora
+Public tablero As New ClassBoard(8)
+Public profundidadinicial As Integer
+Public profundidadmaxima As Integer
+Public funcionEvaluadora As Integer
+Public listajugadas As ClassMoveListArray
+
+Public Sub Main() As String
+
+  Dim solucion As ClassRespuesta
+  Dim nombrefichero As String
+  Dim operacion As New String[]
+  Dim jugada As New Classmovelist
+  Dim valor As Float
+  Dim numeroproceso As String
+
+  contenido = ""
+  'uno de los argumentos es el nombre de un archivo que contiene la operacion a realizar...
+  nombrefichero = LecturaArgumentos()
+  'abro el archivo indicado
+  If IsNull(nombrefichero) = False Then
+    'leo el contenido del fichero de datos....
+    contenido = File.Load(nombrefichero)
+    'por el nombre del fichero estraigo si es el proceso 1 o proceso 2..
+    If InStr(nombrefichero, "1") <> 0 Then
+      'es el proceso 1
+      numeroproceso = "1"
+    Else
+      'es el proceso 2
+      numeroproceso = "2"
+    Endif
+
+    'extraigo los datos necesarios del fichero
+    '
+    extraerdatos(nombrefichero) ' los datos extridos los pasos a variables
+    '
+    '
+    '
+    '
+    '
+    '
+    'empizo el analisis
+    constantes.jugadoractual = turno
+    solucion = ModuloCalculos.MinimaxAlfaBetaEspecial(tablero, turno, profundidadinicial, profundidadmaxima, funcionEvaluadora, listajugadas)
+    'le estoy dando ya la lista de jugadas a calcular...
+    jugada.movimiento = solucion.mov
+    'creo un fichero con la informacion de la solucion...
+
+    'formato: 1º el valor, 2º la jugada...
+    contenido = solucion.valor & "\n"
+    contenido &= jugada.escribe()
+    file.Save(User.Home & "/solucion" & numeroproceso & ".txt", contenido)
+  Endif
+
+End
+
+Public Function LecturaArgumentos() As String
+
+  Dim argumento As String
+  Dim lista As New String[]
+  Dim contador As Integer
+  'leo los argumentos
+  For Each argumento In Application.Args
+    'añadimos todos los argumentos a un array de cadenas
+    lista.add(argumento)
+  Next
+
+  If lista.count > 1 Then
+    'el 1º(0) argumento es el nombre del programa, el 2º(1) es el archivo a analizar
+    Return lista[1]
+  Else
+    Return Null
+
+  Endif
+
+End
+
+Public Sub extraerdatos(contenido As String)
+
+  Dim cadena As New String[]
+
+  cadena = Split(contenido, "\n")
+  'cadena = "turno\n" 0
+  'cadena &= Str$(side) & "\n"1
+  turno = Val(cadena[1])
+
+  'cadena &= "profundiddad actual\n" 2
+  'cadena &= Str$(depth) & "\n" 3
+  profundidadinicial = Val(cadena[3])
+  'cadena &= "profundiddad maxima\n" 4
+  'cadena &= Str$(depthmax) & "\n" 5
+  profundidadmaxima = Val(cadena[5])
+  'cadena &= "funcion evaluadora\n" 6
+  'cadena &= Str$(Evaluator) & "\n" 7
+  funcionEvaluadora = Val(cadena[7])
+
+  'empiezo a leer lista de jugadas....
+
+  'cadena &= movelistArrayCPU.escribe() & "\n" 8
+  '
+  'empizo a leer el tablero...
+  'cadena &= board.escribe() & "\n" depende del numero de jugadas....
 
 End

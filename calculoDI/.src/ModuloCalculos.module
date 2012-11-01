@@ -912,3 +912,74 @@ Public Function alfabeta2(board As Classboard, alfa As Float, beta As Float, dep
   Endif
 
 End
+
+'--------------------------------
+Public Function MinimaxAlfaBetaEspecial(board As Classboard, side As Integer, Depth As Integer, DepthMax As Integer, Evaluator As Integer, listajugadas As Classmovelistarray) As ClassRespuesta
+  'recibo las jugadas a analizar...
+
+  Dim a As Integer
+  Dim solucion As ClassRespuesta
+  Dim movimientoArray As New ClassMovimiento[]
+  Dim movelistArray As New ClassMoveListArray
+  '  Dim movimi As ClassMovimiento
+  Dim score As Float
+  Dim bestscore As Float
+  '  Dim nextmini As ClassRespuesta
+  Dim boardtemp As New Classboard(8)
+
+  Dim bestmovelistArray As New ClassMovelistArray
+
+  If Depth > depthmax Then
+    'hemos accedido a la profundidad de busqueda, retorna el valor del tablero y lista nula de movimientos
+    solucion = New ClassRespuesta(evaluateBoard(board, side, evaluator), Null)
+    Return solucion
+  Else
+
+    movelistArray = listajugadas ' GenerateMoveList(board, side)
+
+    'evaluar si solo existe en el tablero actual una sola jugada a ejecutar...
+    If movelistArray.lista.count = 1 And depth = 0 Then
+      'solo un movimiento posible...
+      boardtemp = MakeMove(board, movelistArray.lista[0], side)
+      solucion = New ClassRespuesta(evaluateBoard(boardtemp, side, evaluator), movelistArray.lista[0].movimiento)
+      Return solucion
+    Endif
+
+    If movelistArray.lista.count = 0 Then
+      'lista vacia
+      solucion = New ClassRespuesta(evaluateBoard(board, side, evaluator), Null)
+      Return solucion
+    Else
+      bestscore = -999999
+      For a = 0 To movelistArray.lista.Max
+        '[
+
+        score = alfabeta2(MakeMove(board, movelistArray.lista[a], False), -99999, +99999, depth, depthmax, - side, side, evaluator)
+        If score = bestscore Then
+          'la añado a la lista de mejores...
+
+          bestmovelistArray.lista.Add(movelistArray.lista[a])
+        Else
+
+          If score > bestscore Then
+
+            bestscore = score
+            bestmovelistArray.lista.Clear()
+            bestmovelistArray.lista.add(movelistArray.lista[a], 0)
+
+          Endif
+
+        Endif
+        ']
+      Next
+
+      movimientoArray = bestmovelistArray.lista[Int(Rnd(0, bestmovelistArray.lista.count))].movimiento
+
+      solucion = New ClassRespuesta(bestscore, movimientoArray)
+    Endif
+
+  Endif
+  Return solucion
+
+End
+
