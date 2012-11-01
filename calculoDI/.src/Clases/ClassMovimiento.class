@@ -1,0 +1,94 @@
+' Gambas class file
+
+Property x0 As Integer
+Private hx0 As Integer
+Property y0 As Integer
+Private hy0 As Integer
+
+Property x1 As Integer
+Private hx1 As Integer
+Property y1 As Integer
+Private hy1 As Integer
+
+Private Function x0_Read() As Integer
+
+  Return hx0
+
+End
+
+Private Sub x0_Write(Value As Integer)
+
+  hx0 = value
+
+End
+
+Private Function y0_Read() As Integer
+
+  Return hy0
+
+End
+
+Private Sub y0_Write(Value As Integer)
+
+  hy0 = value
+
+End
+
+Private Function x1_Read() As Integer
+
+  Return hx1
+
+End
+
+Private Sub x1_Write(Value As Integer)
+
+  hx1 = value
+
+End
+
+Private Function y1_Read() As Integer
+
+  Return hy1
+
+End
+
+Private Sub y1_Write(Value As Integer)
+
+  hy1 = value
+
+End
+
+Public Sub _new(x0a As Integer, y0a As Integer, x1a As Integer, y1a As Integer)
+
+  hx0 = x0a
+  hy0 = y0a
+  hx1 = x1a
+  hy1 = y1a
+
+End
+
+Public Function escribe() As String
+
+  Dim cadena As String
+
+  cadena = "(" & Str$(hx0)
+  cadena &= "," & Str$(hy0)
+  cadena &= ") a (" & Str$(hx1)
+  cadena &= "," & Str$(hy1)
+  cadena &= ")"
+  Return cadena
+
+End
+
+Public Function escribeFC() As String
+
+  Dim cadena As String
+
+  cadena = Choose(hx0, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+  cadena &= Str$(9 - hy0)
+  cadena &= " a " & Choose(hx1, "A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+  cadena &= Str$(9 - hy1)
+
+  Return cadena
+
+End

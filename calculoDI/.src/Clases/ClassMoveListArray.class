@@ -1,0 +1,78 @@
+' Gambas class file
+
+Property valor As Integer
+Private hvalor As Integer
+Property lista As ClassMoveList[]
+Private hlista As New ClassMoveList[]
+
+Private Function lista_Read() As ClassMoveList[]
+
+  Return hlista
+
+End
+
+Private Sub lista_Write(Value As ClassMoveList[])
+
+  hlista = value
+
+End
+
+Private Function valor_Read() As Integer
+
+  Return hvalor
+
+End
+
+Private Sub valor_Write(Value As Integer)
+
+  hvalor = value
+
+End
+
+Public Sub escribe() As String
+
+  Dim valor As ClassMoveList
+  Dim a As Integer
+  Dim cadena As String
+
+  cadena = "Jugadas en el array de jugadas\n"
+  For Each valor In hlista
+    a += 1
+    cadena &= Str$(a) & " " & valor.escribe() & "\n"
+  Next
+  Return cadena
+
+End
+
+Public Sub escribeFC() As String
+
+  Dim valor As ClassMoveList
+  Dim a As Integer
+  Dim cadena As String
+
+  cadena = "Jugadas en el array de jugadas\n"
+  For Each valor In hlista
+    a += 1
+    cadena &= Str$(a) & " " & valor.escribeFC() & "\n"
+  Next
+  Return cadena
+
+End
+
+Public Sub add(listaEntrada As ClassMoveList)
+
+  hlista.Add(listaEntrada)
+
+End
+
+Public Sub copia(listArray As ClassMoveListArray)
+
+  Dim a As Integer
+
+  hlista = New ClassMoveList[]
+
+  For a = 0 To listArray.lista.Max
+    hlista.Add(listArray.lista[a])
+  Next
+
+End

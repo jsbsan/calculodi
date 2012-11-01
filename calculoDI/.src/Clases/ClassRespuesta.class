@@ -1,0 +1,37 @@
+' Gambas class file
+
+Property mov As ClassMovimiento[]
+Private hmov As New ClassMovimiento[]
+Property valor As Float
+Private hvalor As Float
+
+Private Function valor_Read() As Float
+
+  Return hvalor
+
+End
+
+Private Sub valor_Write(Value As Float)
+
+  hvalor = value
+
+End
+
+Private Function mov_Read() As ClassMovimiento[]
+
+  Return hmov
+
+End
+
+Private Sub mov_Write(Value As ClassMovimiento[])
+
+  hmov = Value
+
+End
+
+Public Sub _new(v As Float, movimiento As ClassMovimiento[])
+
+  hvalor = v
+  hmov = movimiento
+
+End

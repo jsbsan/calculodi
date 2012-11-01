@@ -1,0 +1,9 @@
+# Gambas Project File 3.0
+# Compiled with Gambas 3.3.90
+Title=calculoDI
+Startup=MMain
+Version=0.0.1
+TabSize=2
+Translate=1
+Language=es
+Packager=1

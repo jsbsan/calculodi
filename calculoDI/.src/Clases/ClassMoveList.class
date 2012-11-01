@@ -1,0 +1,75 @@
+' Gambas class file
+
+Property movimiento As ClassMovimiento[]
+Private hmovimiento As New ClassMovimiento[]
+
+Public Function escribe() As String
+
+  Dim a As Integer
+  Dim cadena As String
+
+  For a = 0 To hmovimiento.Max
+    cadena &= " | " & hmovimiento[a].escribe()
+  Next
+  Return cadena
+
+End
+
+Public Function escribeFC() As String
+
+  Dim a As Integer
+  Dim cadena As String
+
+  For a = 0 To hmovimiento.Max
+    cadena &= " | " & hmovimiento[a].escribeFC()
+  Next
+  Return cadena
+
+End
+
+Public Function escribegrid(gridviewjugadas As GridView, turno As Integer)
+
+  Dim a As Integer
+  Dim cadena As String
+  Dim cadena2 As String
+
+  For a = 0 To hmovimiento.Max
+    If a <> 0 Then
+      cadena &= " | "
+      cadena2 &= "|"
+    Endif
+    cadena &= hmovimiento[a].escribeFC()
+    cadena2 &= Str$(hmovimiento[a].x0) & "-" & Str$(hmovimiento[a].y0) & "-" & Str$(hmovimiento[a].x1) & "-" & Str$(hmovimiento[a].y1)
+  Next
+  gridviewjugadas.row = gridviewjugadas.rows.count
+
+  If turno = constantes.black Then
+    'escribo movimiento del turno blanco...
+    'aumento una fila
+    gridviewjugadas.rows.count += 1
+    gridviewjugadas.column = 0
+    gridviewjugadas[gridviewjugadas.rows.count - 1, 0].text = cadena
+    gridviewjugadas[gridviewjugadas.rows.count - 1, 2].text = cadena2
+    gridviewjugadas.MoveTo(gridviewjugadas.rows.count - 1, 0)
+
+  Else
+    If gridviewjugadas.rows.count = 0 Then gridviewjugadas.rows.count = 1
+    gridviewjugadas[gridviewjugadas.rows.count - 1, 1].text = cadena
+    gridviewjugadas.column = 1
+    gridviewjugadas.MoveTo(gridviewjugadas.rows.count - 1, 0)
+    gridviewjugadas[gridviewjugadas.rows.count - 1, 3].text = cadena2
+  Endif
+
+End
+
+Private Function movimiento_Read() As ClassMovimiento[]
+
+  Return hmovimiento
+
+End
+
+Private Sub movimiento_Write(Value As ClassMovimiento[])
+
+  hmovimiento = value
+
+End
