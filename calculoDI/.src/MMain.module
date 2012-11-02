@@ -3,11 +3,11 @@
 Public contenido As String
 
 Public turno As Integer 'controla el turno del jugador que tiene que jugar ahora
-Public tablero As New ClassBoard(8)
+Public tablero As New ClassBoard(10)
 Public profundidadinicial As Integer
 Public profundidadmaxima As Integer
 Public funcionEvaluadora As Integer
-Public listajugadas As ClassMoveListArray
+Public listajugadas As New ClassMoveListArray
 
 Public Sub Main() As String
 
@@ -37,12 +37,17 @@ Public Sub Main() As String
     'extraigo los datos necesarios del fichero
     '
     extraerdatos(nombrefichero) ' los datos extridos los pasos a variables
-    '
-    '
-    '
-    '
-    '
-    '
+    '***********************************************************************************
+    'escribir los datos leeidos y transfomados en variables utilizables por el programa
+    '***********************************************************************************
+    '  Print "turno: "; turno
+    '  Print " profundidadinicial: "; profundidadinicial
+    'Print "  profundidadmaxima: "; profundidadmaxima
+    'Print "funcion: "; funcionEvaluadora
+    'Print "Tablero: "; tablero.escribe()
+    'Print "Jugadas: "; listajugadas.lista.Count
+    ' Print listajugadas.escribe()
+
     'empizo el analisis
     constantes.jugadoractual = turno
     solucion = ModuloCalculos.MinimaxAlfaBetaEspecial(tablero, turno, profundidadinicial, profundidadmaxima, funcionEvaluadora, listajugadas)
@@ -53,7 +58,9 @@ Public Sub Main() As String
     'formato: 1º el valor, 2º la jugada...
     contenido = solucion.valor & "\n"
     contenido &= jugada.escribe()
-    file.Save(User.Home & "/solucion" & numeroproceso & ".txt", contenido)
+    file.Save("/tmp/solucion" & numeroproceso & ".txt", contenido)
+    'escribo en consola "1": todo correcto
+    Print "1"
   Endif
 
 End
@@ -81,7 +88,13 @@ End
 
 Public Sub extraerdatos(contenido As String)
 
+  Dim x As Integer, y As Integer
   Dim cadena As New String[]
+  Dim jugadatemp As New ClassMoveList
+  Dim contadorlectura As Integer
+  Dim numerojugadas As Integer
+
+  contenido = file.Load(contenido)
 
   cadena = Split(contenido, "\n")
   'cadena = "turno\n" 0
@@ -98,11 +111,72 @@ Public Sub extraerdatos(contenido As String)
   'cadena &= Str$(Evaluator) & "\n" 7
   funcionEvaluadora = Val(cadena[7])
 
-  'empiezo a leer lista de jugadas....
+  'empizo a leer el tablero...10x10
+  '  cadena &= board.escribe() & "\n"
+  contadorlectura = 9
+  For x = 0 To 10
+    For Y = 0 To 10
+      tablero.tablero[x, y] = Val(cadena[contadorlectura])
+      contadorlectura += 1
+    Next
+  Next
+  contadorlectura += 2
+  '  cadena &= "Jugadas\n"
+  numerojugadas = Val(cadena[contadorlectura])
+  contadorlectura += 1 'texto de jugadas
+  For x = 0 To numerojugadas - 1
+    contadorlectura += 1
+    jugadatemp = New ClassMoveList
+    jugadatemp = convierteMovimientos(cadena[contadorlectura])
+    listajugadas.lista.Add(jugadatemp)
+  Next
 
-  'cadena &= movelistArrayCPU.escribe() & "\n" 8
-  '
-  'empizo a leer el tablero...
-  'cadena &= board.escribe() & "\n" depende del numero de jugadas....
+End
+
+Private Function convierteMovimientos(cadena As String) As Classmovelist
+
+  'trocear la cadena en  "\n"
+  'trocear la jugada en "|", la primera contiene el numero de jugada... (no vale para nada)
+  'troce el movimeinto en "a"
+  'elimina "(" y ")"
+  'trocea en ,
+  Dim listajugadas As New Classmovelist
+  Dim listaMovimiento As New ClassMovimiento[]
+  Dim a As Integer, b As Integer, c As Integer
+  Dim jugada As New String[]
+  Dim movimientojugada As New String[]
+  Dim celda As New String[]
+  Dim posi As New String[]
+  Dim movimientotemp As ClassMovimiento
+  'elimino todos los ( y )
+  cadena = Replace(cadena, "(", "")
+  cadena = Replace(cadena, ")", "")
+
+  jugada = Split(cadena, "\n")
+
+  For a = 0 To jugada.count - 1
+    movimientojugada = Split(jugada[a], "|")
+    For b = 1 To movimientojugada.count - 1 'salto el 0 ya que contiene el numero de jugada...
+      celda = Split(movimientojugada[b], "a")
+      movimientotemp = New ClassMovimiento(0, 0, 0, 0)
+      For c = 0 To celda.count - 1
+        posi = Split(celda[c], ",")
+
+        If c = 0 Then
+          movimientotemp.x0 = Val(posi[0])
+          movimientotemp.y0 = Val(posi[1])
+        Else
+          movimientotemp.x1 = Val(posi[0])
+          movimientotemp.y1 = Val(posi[1])
+
+        Endif
+      Next
+      'añado el movimiento al array de movimientos
+      listaMovimiento.Add(movimientotemp)
+    Next
+
+  Next
+  listajugadas.movimiento = listaMovimiento
+  Return listajugadas
 
 End

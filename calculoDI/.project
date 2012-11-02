@@ -2,8 +2,10 @@
 # Compiled with Gambas 3.3.90
 Title=calculoDI
 Startup=MMain
-Version=0.0.1
+Version=0.0.4
+Arguments="/tmp/contenido1.txt\n"
 TabSize=2
 Translate=1
 Language=es
+ExecPath=/home/uno/calculoDI.gambas
 Packager=1

@@ -925,7 +925,7 @@ Public Function MinimaxAlfaBetaEspecial(board As Classboard, side As Integer, De
   Dim score As Float
   Dim bestscore As Float
   '  Dim nextmini As ClassRespuesta
-  Dim boardtemp As New Classboard(8)
+  Dim boardtemp As New Classboard(10)
 
   Dim bestmovelistArray As New ClassMovelistArray
 
@@ -982,4 +982,3 @@ Public Function MinimaxAlfaBetaEspecial(board As Classboard, side As Integer, De
   Return solucion
 
 End
-
