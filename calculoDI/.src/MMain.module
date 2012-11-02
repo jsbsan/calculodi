@@ -43,7 +43,7 @@ Public Sub Main() As String
     '  Print "turno: "; turno
     '  Print " profundidadinicial: "; profundidadinicial
     'Print "  profundidadmaxima: "; profundidadmaxima
-    'Print "funcion: "; funcionEvaluadora
+    ' Print "funcion: "; funcionEvaluadora
     'Print "Tablero: "; tablero.escribe()
     'Print "Jugadas: "; listajugadas.lista.Count
     ' Print listajugadas.escribe()

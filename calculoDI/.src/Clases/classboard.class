@@ -22,7 +22,7 @@ Public Sub inicio(squares As Integer)
 
   For x = 1 To squares
     For y = 1 To squares
-      tablero[x, y] = Constantes.blank
+      tablero[y, x] = Constantes.blank
     Next
   Next
 
