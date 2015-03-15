@@ -1,0 +1,1 @@
+Programa de consola que recibe un fichero de datos con informacion del turno,profundidad, funcion evaluadora, jugadas posibles, y tablero, y devuelve otro fichero con los datos de la mejor jugada y su valoracion
